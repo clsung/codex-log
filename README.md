@@ -13,17 +13,36 @@ A Python CLI tool that converts Codex transcript files into readable HTML format
 
 ## Installation
 
+### Using uv (Recommended)
+
 ```bash
-# Clone or download the project
+# Clone the project
+git clone https://github.com/clsung/codex_log.git
 cd codex_log
 
-# Create virtual environment with uv (recommended)
-uv venv
-source .venv/bin/activate
-uv pip install -r requirements.txt
+# Install with uv (creates virtual environment automatically)
+uv sync
 
-# Or with pip
-pip install -r requirements.txt
+# Run the tool
+uv run codex-log ~/.codex/history.jsonl output.html
+```
+
+### Alternative: Using pip
+
+```bash
+# Clone the project
+git clone https://github.com/clsung/codex_log.git
+cd codex_log
+
+# Create virtual environment
+python -m venv .venv
+source .venv/bin/activate  # On Windows: .venv\Scripts\activate
+
+# Install dependencies
+pip install -e .
+
+# Run the tool
+codex-log ~/.codex/history.jsonl output.html
 ```
 
 ## Usage
@@ -33,12 +52,11 @@ pip install -r requirements.txt
 Convert the basic Codex history file to HTML:
 
 ```bash
-# Basic usage
-python -m codex_log ~/.codex/history.jsonl output.html
+# With uv (recommended)
+uv run codex-log ~/.codex/history.jsonl output.html
 
-# With virtual environment
-source .venv/bin/activate
-python -m codex_log ~/.codex/history.jsonl codex_log_output.html
+# Or with pip installation
+codex-log ~/.codex/history.jsonl codex_log_output.html
 ```
 
 This creates a chronological view of all your Codex interactions grouped by session.
@@ -48,11 +66,11 @@ This creates a chronological view of all your Codex interactions grouped by sess
 Parse session files for project-based organization:
 
 ```bash
-# Parse all sessions with project grouping
-python -m codex_log --sessions ~/.codex/sessions codex_projects.html
+# With uv (recommended)
+uv run codex-log --sessions ~/.codex/sessions codex_projects.html
 
-# Or specify sessions directory directly
-python -m codex_log ~/.codex/sessions codex_projects.html
+# Or specify sessions directory directly  
+uv run codex-log ~/.codex/sessions codex_projects.html
 ```
 
 This creates a project-centric view with:
@@ -118,20 +136,26 @@ Session files contain rich metadata including:
 - jinja2 - HTML template rendering
 - click - Command-line interface
 
-### Code Quality
-```bash
-# Linting
-python -m flake8 codex_log/
-python -m mypy codex_log/
+### Development
 
-# Or with ruff (if available)
-ruff check codex_log/
-ruff format codex_log/
-```
-
-### Testing
 ```bash
-python -m pytest tests/
+# Install development dependencies
+uv sync --dev
+
+# Run tests
+uv run pytest
+
+# Run tests with coverage
+uv run pytest --cov=codex_log
+
+# Code quality checks
+uv run ruff check codex_log/
+uv run ruff format codex_log/
+uv run mypy codex_log/
+
+# Security scan
+uv run safety check
+uv run bandit -r codex_log/
 ```
 
 ## Key Differences from Claude Code Log
@@ -151,10 +175,10 @@ python -m pytest tests/
 When using `--sessions` mode, you'll get a project overview showing:
 
 ```
-📊 codex_log (git@github.com:clsung/codex_log.git)
+📊 ntpu-course (git@github.com:clsung/ntpu-course.git)
    - 9 sessions, 67 entries
    - Activity: August 26, 2025 - September 02, 2025
-   - Working directory: /Users/clsung/git/codex_log
+   - Working directory: /Users/clsung/git/ntpu-course
 
 📊 url_cache (git@github.com:clsung/url_cache.git)  
    - 1 session, 2 entries
@@ -167,6 +191,15 @@ When using `--sessions` mode, you'll get a project overview showing:
 python -m codex_log --help
 ```
 
+## Documentation
+
+For additional documentation, see the [docs/](docs/) directory:
+- [Test Suite Documentation](docs/test-suite.md)
+- [Testing Implementation Guide](docs/testing.md) 
+- [Reference Materials](docs/claude-code-log-reference.md)
+
+For development setup and contribution guidelines, see [CLAUDE.md](CLAUDE.md).
+
 ## License
 
 MIT License - feel free to use and modify as needed.
@@ -174,10 +207,12 @@ MIT License - feel free to use and modify as needed.
 ## Contributing
 
 1. Fork the repository
-2. Create a feature branch
+2. Create a feature branch  
 3. Make your changes
 4. Add tests if applicable
 5. Submit a pull request
+
+See [CLAUDE.md](CLAUDE.md) for detailed development setup and testing procedures.
 
 ## Acknowledgments
 

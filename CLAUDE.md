@@ -23,23 +23,28 @@ This tool processes Codex history files (stored as JSONL) and generates clean, o
 
 ### Installation
 ```bash
-# Create virtual environment with uv (recommended)
-uv venv
-source .venv/bin/activate
-uv pip install -r requirements.txt
+# Install with uv (recommended - handles virtual environment automatically)
+uv sync
 
-# Or with pip
-pip install -r requirements.txt
+# Install with development dependencies
+uv sync --dev
+
+# Alternative: traditional pip approach
+python -m venv .venv
+source .venv/bin/activate
+pip install -e .
 ```
 
 ### Usage
 ```bash
-# Basic usage
-python -m codex_log ~/.codex/history.jsonl output.html
+# Basic usage with uv
+uv run codex-log ~/.codex/history.jsonl output.html
 
-# With virtual environment
-source .venv/bin/activate
-python -m codex_log ~/.codex/history.jsonl codex_log_output.html
+# Project mode with uv
+uv run codex-log --sessions ~/.codex/sessions codex_projects.html
+
+# Legacy module usage
+uv run python -m codex_log ~/.codex/history.jsonl output.html
 ```
 
 ## Development
@@ -77,34 +82,55 @@ Uses Jinja2 templates for HTML generation:
 
 ### Testing
 ```bash
-python -m pytest tests/
+# Run all tests
+uv run pytest
+
+# Run with coverage
+uv run pytest --cov=codex_log --cov-report=html
+
+# Run specific test categories
+uv run pytest -m unit tests/
+uv run pytest -m integration tests/
+
+# Run tests in parallel
+uv run pytest -n auto tests/
 ```
 
 ### Code Quality
 ```bash
-# Linting
-python -m flake8 codex_log/
-python -m mypy codex_log/
+# Format code
+uv run black codex_log/
+uv run ruff format codex_log/
 
-# Or with ruff (if available)
-ruff check codex_log/
-ruff format codex_log/
+# Lint code
+uv run ruff check codex_log/
+uv run mypy codex_log/
+
+# Security checks
+uv run safety check
+uv run bandit -r codex_log/
+
+# All quality checks
+uv run ruff check codex_log/ && uv run mypy codex_log/ && uv run pytest
 ```
 
 ### Development with uv
 
-The project works well with `uv` for dependency management:
+The project is now fully configured for `uv` dependency management:
 
 ```bash
-# Create virtual environment
-uv venv
+# Initialize new development environment
+uv sync --dev
 
-# Activate virtual environment
-source .venv/bin/activate
+# Add new dependency
+uv add new-package
 
-# Install dependencies
-uv pip install -r requirements.txt
+# Add development dependency
+uv add --dev pytest-new-plugin
+
+# Update all dependencies
+uv sync --upgrade
 
 # Test the converter
-python -m codex_log ~/.codex/history.jsonl test_output.html
+uv run codex-log ~/.codex/history.jsonl test_output.html
 ```
