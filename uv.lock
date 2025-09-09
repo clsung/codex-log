@@ -180,8 +180,8 @@ wheels = [
 ]
 
 [[package]]
-name = "codex-log-converter"
-version = "0.1.0"
+name = "codex-log"
+version = "0.1.1"
 source = { editable = "." }
 dependencies = [
     { name = "click" },

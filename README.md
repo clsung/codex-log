@@ -17,8 +17,8 @@ A Python CLI tool that converts Codex transcript files into readable HTML format
 
 ```bash
 # Clone the project
-git clone https://github.com/clsung/codex_log.git
-cd codex_log
+git clone https://github.com/clsung/codex-log.git
+cd codex-log
 
 # Install with uv (creates virtual environment automatically)
 uv sync
@@ -31,8 +31,8 @@ uv run codex-log ~/.codex/history.jsonl output.html
 
 ```bash
 # Clone the project
-git clone https://github.com/clsung/codex_log.git
-cd codex_log
+git clone https://github.com/clsung/codex-log.git
+cd codex-log
 
 # Create virtual environment
 python -m venv .venv
@@ -97,7 +97,7 @@ This creates a project-centric view with:
 ## Project Structure
 
 ```
-codex_log/
+codex-log/
 ├── codex_log/                 # Main package
 │   ├── __init__.py
 │   ├── __main__.py
@@ -188,7 +188,7 @@ When using `--sessions` mode, you'll get a project overview showing:
 
 ### CLI Help
 ```bash
-python -m codex_log --help
+python -m codex-log --help
 ```
 
 ## Documentation

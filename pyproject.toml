@@ -3,8 +3,8 @@ requires = ["hatchling"]
 build-backend = "hatchling.build"
 
 [project]
-name = "codex-log-converter"
-version = "0.1.0"
+name = "codex-log"
+version = "0.1.1"
 description = "A Python CLI tool that converts Codex transcript JSONL files into readable HTML format"
 readme = "README.md"
 license = {text = "MIT"}
@@ -75,9 +75,9 @@ codex-log = "codex_log.converter:main"
 packages = ["codex_log"]
 
 [project.urls]
-Homepage = "https://github.com/clsung/codex_log"
-Repository = "https://github.com/clsung/codex_log.git"
-Issues = "https://github.com/clsung/codex_log/issues"
+Homepage = "https://github.com/clsung/codex-log"
+Repository = "https://github.com/clsung/codex-log.git"
+Issues = "https://github.com/clsung/codex-log/issues"
 
 [tool.uv]
 dev-dependencies = [
